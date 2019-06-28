@@ -1,4 +1,4 @@
-package com.data.dataproducer.service.proxy;
+package com.data.dataproducer.proxy;
 
 /**
  * App push代理层

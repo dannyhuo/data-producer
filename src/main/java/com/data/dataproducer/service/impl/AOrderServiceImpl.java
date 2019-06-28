@@ -1,8 +1,8 @@
 package com.data.dataproducer.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.data.dataproducer.jms.CouponUseMessage;
-import com.data.dataproducer.jms.UserOrderMessage;
+import com.data.dataproducer.proxy.jms.CouponUseMessageProxy;
+import com.data.dataproducer.proxy.jms.UserOrderMessageProxy;
 import com.data.dataproducer.config.DataCacheConfig;
 import com.data.dataproducer.entity.*;
 import com.data.dataproducer.entity.bo.OrderBO;
@@ -50,10 +50,10 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
     private IAOrderRefundService iaOrderRefundService;
 
     @Autowired
-    private UserOrderMessage userOrderMessage;
+    private UserOrderMessageProxy userOrderMessage;
 
     @Autowired
-    private CouponUseMessage couponUseMessage;
+    private CouponUseMessageProxy couponUseMessage;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -1,4 +1,4 @@
-package com.data.dataproducer.service.proxy;
+package com.data.dataproducer.proxy;
 
 /**
  * 微信消息发送代理层

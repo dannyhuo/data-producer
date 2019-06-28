@@ -1,4 +1,4 @@
-package com.data.dataproducer.service.proxy;
+package com.data.dataproducer.proxy;
 
 /**
  * 短信通道代理层

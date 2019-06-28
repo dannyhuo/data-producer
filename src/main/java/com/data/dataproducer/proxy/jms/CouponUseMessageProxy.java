@@ -1,4 +1,4 @@
-package com.data.dataproducer.jms;
+package com.data.dataproducer.proxy.jms;
 
 import com.data.dataproducer.entity.ACouponDetail;
 import com.data.dataproducer.entity.ACouponUsage;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class CouponUseMessage {
+public class CouponUseMessageProxy {
 
     /**
      * 用券消息通知

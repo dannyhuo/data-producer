@@ -1,4 +1,4 @@
-package com.data.dataproducer.service.proxy;
+package com.data.dataproducer.proxy;
 
 /**
  * 优惠券发送代理层

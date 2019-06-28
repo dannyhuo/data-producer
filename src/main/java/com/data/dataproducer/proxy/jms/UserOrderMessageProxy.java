@@ -1,4 +1,4 @@
-package com.data.dataproducer.jms;
+package com.data.dataproducer.proxy.jms;
 
 import com.data.dataproducer.entity.AOrder;
 import com.data.dataproducer.entity.AOrderPayment;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class UserOrderMessage {
+public class UserOrderMessageProxy {
 
 
     /**

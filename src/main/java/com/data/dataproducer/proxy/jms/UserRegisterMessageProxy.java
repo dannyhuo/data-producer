@@ -1,4 +1,4 @@
-package com.data.dataproducer.jms;
+package com.data.dataproducer.proxy.jms;
 
 import com.data.dataproducer.entity.AUser;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class UserRegisterMessage {
+public class UserRegisterMessageProxy {
 
     /**
      * 用户注册消息通知

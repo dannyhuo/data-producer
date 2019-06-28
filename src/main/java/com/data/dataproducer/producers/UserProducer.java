@@ -5,7 +5,7 @@ import com.data.dataproducer.entity.AUser;
 import com.data.dataproducer.entity.AUserLoginDetail;
 import com.data.dataproducer.factory.AUserFactory;
 import com.data.dataproducer.factory.RandomFactory;
-import com.data.dataproducer.jms.UserRegisterMessage;
+import com.data.dataproducer.proxy.jms.UserRegisterMessageProxy;
 import com.data.dataproducer.service.IAUserLoginDetailService;
 import com.data.dataproducer.service.IAUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class UserProducer {
     private Map<Integer, Integer> hour24Max;
 
     @Autowired
-    private UserRegisterMessage userRegisterMessage;
+    private UserRegisterMessageProxy userRegisterMessage;
 
     /**
      * 用户注册
