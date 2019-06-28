@@ -44,10 +44,18 @@ public class CouponProducer {
     @Value("${data.producer.coupon.cover.minPercent}")
     private float minCoverPercent;
 
+    @Value("${data.producer.coupon.enable.auto}")
+    private boolean enableAutoSendCoupon;
+
+
     private int sendCouponBatchSize = 5000;
 
     @Scheduled(fixedRate = 1000 * 60 * 30)
     public void produceCoupon () throws InterruptedException {
+        if (!enableAutoSendCoupon) {
+            return;
+        }
+
         //做活动，创建优惠券
         ACoupon coupon = aCouponFactory.produceCoupon();
         if (!iaCouponService.save(coupon)) {

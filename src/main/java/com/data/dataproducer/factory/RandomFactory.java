@@ -370,7 +370,7 @@ public class RandomFactory {
      * @return
      */
     public BigDecimal randomProductPrice () {
-        //最大不超过10000，最小不低于1
+        //最大不超过20000，最小不低于1
         int i = random.nextInt(20000) + 1;
 
         return BigDecimal.valueOf(i);

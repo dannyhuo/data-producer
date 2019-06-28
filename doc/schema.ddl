@@ -111,24 +111,22 @@ DROP TABLE IF EXISTS `a_ecart`;
 CREATE TABLE `a_ecart` (
   `cart_id` BIGINT AUTO_INCREMENT COMMENT 'key',
   `product_id` int COMMENT '产品ID',
+  `category_code` varchar(20) COMMENT '产品品类【冗余】',
   `user_id` BIGINT COMMENT '所属用户ID',
-  `store_id` int COMMENT '门店ID',
-  `discount_amount` decimal(8, 2) COMMENT '折扣金额',
-  `due_amount` decimal(8, 2) COMMENT '应付金额，销售-折扣',
-  `actual_pay_amount` decimal(8, 2) COMMENT '实付金额',
-  `contact_name` VARCHAR(100) COMMENT '联系人姓名',
-  `contact_mobile` VARCHAR(100) COMMENT '联系人手机号',
-  `order_platform` int default 0 COMMENT '下单平台， 0：线下门店，1：pc，2：app，3：微信，4：小程序，5：公众号，6：h5，7：wap，8：分销， 9：其它',
-  `is_payed` tinyint default 0 COMMENT '是否支付， 0=未支付，1=已支付',
-  `status` tinyint default 0 COMMENT '订单状态， 未支付，已支付，已退款',
+  `store_id` int COMMENT '产品所属门店ID，存储入驻商家店铺，入驻商家订单需拆单',
+  `sell_price` decimal(8, 2) COMMENT '加入购物车时销售价',
+  `marketing_price` decimal(8, 2) COMMENT '加入购物车时市场价',
+  `quntity` tinyint default 1 COMMENT '数量',
+  `is_ordered` tinyint default 0 COMMENT '是否已下单, 0 未提交订单， 1 已提交订单',
   `comment` VARCHAR(100) COMMENT '备注',
   `create_time` timestamp default now() COMMENT '创建时间',
   `update_time` timestamp COMMENT '修改时间',
   `is_deleted` tinyint default 0 COMMENT '是否删除， 0=未删除，1=已删除',
-  PRIMARY KEY (`order_id`)
+  PRIMARY KEY (`cart_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-create index `a_order_create_time` on `a_order`(`create_time`);
-create index `a_order_update_time` on `a_order`(`update_time`);
+create index `idx_a_ecart_create_time` on `a_ecart`(`create_time`);
+create index `idx_a_ecart_update_time` on `a_ecart`(`update_time`);
+create index `idx_a_ecart_user_id` on `a_ecart`(`user_id`);
 
 
 --订单表
