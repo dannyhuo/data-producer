@@ -30,9 +30,14 @@ package com.data.dataproducer.entity;
     private Long sendLogId;
 
             /**
-            * 模板名称
+            * 发送用户ID
             */
-    private String sendUserId;
+    private Long sendUserId;
+
+            /**
+            * 发送回执编号，发送方传入
+            */
+    private String receiptCode;
 
             /**
             * 接收方，短信为手机号，邮件为邮箱等
@@ -50,7 +55,7 @@ package com.data.dataproducer.entity;
     private String placeholders;
 
             /**
-            * 模板消息中的参数值
+            * json格式， 模板消息中的参数值
             */
     private String args;
 
@@ -65,13 +70,13 @@ package com.data.dataproducer.entity;
     private Integer msgType;
 
             /**
-            * 用券时间
+            * 发送时间
             */
     private LocalDateTime sendTime;
 
-    /**
-     *  发送状态 0 失败， 1、成功
-     */
+            /**
+            * 发送状态 0 失败， 1、成功
+            */
     private Integer sendStatus;
 
 

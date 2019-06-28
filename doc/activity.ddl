@@ -64,19 +64,22 @@ CREATE TABLE `a_msg_template` (
 DROP TABLE IF EXISTS `a_msg_send_log`;
 CREATE TABLE `a_msg_send_log` (
   `send_log_id` BIGINT AUTO_INCREMENT COMMENT 'key',
-  `send_user_id` varchar(20) COMMENT '模板名称',
+  `send_user_id` BIGINT COMMENT '发送用户ID',
+  `receipt_code` varchar(32) COMMENT '发送回执编号，发送方传入',
   `receiver` varchar(50) COMMENT '接收方，短信为手机号，邮件为邮箱等',
   `tmplate_id` varchar(500) COMMENT '模板消息内容',
   `placeholders` varchar(100) default 0 COMMENT '模板消息中占位符，占位符会在发送的时候用对应的参数替换【冗余】',
-  `args` varchar(200) COMMENT '模板消息中的参数值',
+  `args` varchar(200) COMMENT 'json格式， 模板消息中的参数值',
   `content` varchar(300) COMMENT '发送内容',
   `msg_type` tinyint COMMENT '消息类型 0 短信， 1、微信， 2 app push, 3、邮件',
-  `send_time` timestamp default now() COMMENT '用券时间',
+  `send_time` timestamp default now() COMMENT '发送时间',
   `send_status` tinyint COMMENT '发送状态 0 失败， 1、成功',
   PRIMARY KEY (`send_log_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create index `idx_a_msg_send_log_send_user_id` on `a_msg_send_log`(`send_user_id`);
+create index `idx_a_msg_send_log_receipt_code` on `a_msg_send_log`(`receipt_code`);
 create index `idx_a_msg_send_log_send_time` on `a_msg_send_log`(`send_time`);
+
 
 -- 活动
 DROP TABLE IF EXISTS `a_activity`;
