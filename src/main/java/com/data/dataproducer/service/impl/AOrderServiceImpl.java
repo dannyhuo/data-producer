@@ -75,7 +75,10 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
             //如果支付成功，则修改支付状态
             if (payment.getStatus().equals(StoreAuditEnum.SUCCESS.value()) &&
                     iaOrderPaymentService.save(payment)) {
+                //支付状态改为true
                 order.setIsPayed(BooleanEnum.TRUE.value());
+                //订单状态改为已支付
+                order.setStatus(OrderStatusEnum.PAYED.value());
                 order.setUpdateTime(LocalDateTime.now());
                 order.setActualPayAmount(payment.getPayAmount());
                 payOkay = iaOrderService.updateById(order);

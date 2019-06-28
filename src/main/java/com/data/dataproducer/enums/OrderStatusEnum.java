@@ -7,7 +7,7 @@ package com.data.dataproducer.enums;
 public enum OrderStatusEnum {
 
     /**
-     * 未使用
+     * 未支付
      */
     NOT_PAY (0, "NOT_PAY"),
 

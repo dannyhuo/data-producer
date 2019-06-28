@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -55,6 +54,12 @@ public class OrderProducer {
      */
     @Value("${data.producer.order.not-immediate-pay.denominator}")
     private int notImmediatePayDenominator;
+
+    /**
+     * 最大产品个数
+     */
+    @Value("${data.producer.order.product.count.max}")
+    private int maxProdCountPerOrder;
 
 
 
@@ -95,7 +100,7 @@ public class OrderProducer {
         //自动退单的峰值，为订单的十分之一
         int refundCount = orderCount / 10 + 1;
         for (int i = 0; i < refundCount; i++) {
-            int paymentId = randomFactory.randomId(dataCache.getMaxOrderPaymentId() - dataCache.getIdStart()) + dataCache.getIdStart().intValue();
+            Long paymentId = dataCache.getRdmPaymentId();
             AOrderPayment payment = iaOrderPaymentService.getById(paymentId);
             if (null == payment) {
                 //支付单不存在，跳过
@@ -130,7 +135,7 @@ public class OrderProducer {
         }
 
         Map<Integer, List<AProduct>> products = new HashMap<>(10);
-        int quantity = randomFactory.randomId(randomFactory.randomId(10)) + 1;
+        int quantity = randomFactory.randomId(randomFactory.randomId(maxProdCountPerOrder)) + 1;
         for (int i = 0; i < quantity; i++) {
             AProduct product = iaProductService.getById(dataCache.getRdmProductId());
             //产品不为空，且为上架状态
@@ -151,9 +156,9 @@ public class OrderProducer {
             return;
         }
 
-        Iterator<Map.Entry<Integer, List<AProduct>>> iter = products.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<Integer, List<AProduct>> entity = iter.next();
+        Iterator<Map.Entry<Integer, List<AProduct>>> iterator = products.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, List<AProduct>> entity = iterator.next();
             Integer storeId = entity.getKey();
             if (null == storeId) {
                 //如果是自营或线下类的产品，随机生成一家店

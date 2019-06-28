@@ -27,11 +27,29 @@ public class AOrderFactory {
     @Autowired
     private RandomFactory randomFactory;
 
+    /**
+     * 支付失败率分母配置
+     */
     @Value("${data.producer.order.pay.failed.denominator}")
     private int payFailedDenominator;
 
+    /**
+     * 退款失败率分母配置
+     */
     @Value("${data.producer.order.refund.failed.denominator}")
     private int refundFailedDenominator;
+
+    /**
+     * 最大支付的账号的数量
+     */
+    @Value("${data.producer.order.payment.card.count.max}")
+    private int maxPayCartCount;
+
+    /**
+     * 每个产品的最大购买份数
+     */
+    @Value("${data.producer.order.per.product.quntity.max}")
+    private int maxProductQuntity;
 
     /**
      * 生成订单数据
@@ -67,7 +85,7 @@ public class AOrderFactory {
             AOrderDetail.AOrderDetailBuilder orderDetail = AOrderDetail.builder();
             orderDetail.productId(product.getProductId());
             orderDetail.price(product.getSellPrice());
-            int quantity = randomFactory.randomId(5L);
+            int quantity = randomFactory.randomId(randomFactory.randomId(maxProductQuntity)) + 1;
             orderDetail.quantity(quantity);
             BigDecimal amount = product.getSellPrice().multiply(BigDecimal.valueOf(quantity));
             orderDetail.totalAmount(amount);
@@ -93,12 +111,12 @@ public class AOrderFactory {
         AOrderPayment.AOrderPaymentBuilder builder = AOrderPayment.builder();
         builder.orderId(order.getOrderId());
         builder.payAmount(order.getTotalAmount());
-        //每用户默认有10张卡，随机使用某张卡
-        String cardNo = order.getUserId().toString() + randomFactory.randomId(10L);
+        //每用户默认有${配置}张卡，随机使用某张卡
+        String cardNo = order.getUserId().toString() + randomFactory.randomId(maxPayCartCount);
         builder.payCardNo(MD5Util.md5(cardNo));
         builder.payStyle(randomFactory.randomPayStyle());
         builder.payNo(UCodeUtil.produce());
-        //随机设置千分之一支付失败率
+        //随机设置${配置}分之一支付失败率
         boolean failed = randomFactory.randomId(payFailedDenominator) % payFailedDenominator == 0;
         if (failed) {
             builder.status(StoreAuditEnum.FAILED.value());
@@ -119,7 +137,7 @@ public class AOrderFactory {
         AOrderRefund.AOrderRefundBuilder builder = AOrderRefund.builder();
         builder.orderPaymentId(payment.getOrderPaymentId());
         builder.refundCardNo(payment.getPayCardNo());
-        //默认随机设置千分之一退款失败率
+        //默认随机设置${配置}分之一退款失败率
         boolean failed = randomFactory.randomId(refundFailedDenominator) % refundFailedDenominator == 0;
         if (failed) {
             builder.status(RefundStatusEnum.FAILED.value());
