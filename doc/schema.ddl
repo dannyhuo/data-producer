@@ -203,55 +203,6 @@ CREATE TABLE `a_order_refund` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create index `a_order_refund_order_payment_id` on `a_order_refund`(`order_payment_id`);
 
---优惠券
-DROP TABLE IF EXISTS `a_coupon`;
-CREATE TABLE `a_coupon` (
-  `coupon_id` BIGINT AUTO_INCREMENT COMMENT 'key',
-  `coupon_name` varchar(100) COMMENT '优惠券名称',
-  `coupon_type` tinyint COMMENT '优惠券类型，0：满减，如满100减5块， 1：折扣券',
-  `discount_sill` decimal(8, 2) COMMENT '满减基数',
-  `discount` decimal(4, 2) COMMENT '打折， 92折扣为0.92',
-  `discount_amount` decimal(8, 2) COMMENT '满减或立减金额',
-  `audit_status` tinyint default 0 COMMENT '审核状态，0待审核，1审核通过，2审核未通过',
-  `start_time` timestamp default now() COMMENT '有效期，起始时间',
-  `end_time` timestamp default now() COMMENT '有效期，截止时间',
-  `create_by` varchar(30) COMMENT '创建人',
-  `create_time` timestamp default now() COMMENT '创建时间',
-  PRIMARY KEY (`coupon_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-
-
---优惠券明细，对应到每个人
-DROP TABLE IF EXISTS `a_coupon_detail`;
-CREATE TABLE `a_coupon_detail` (
-  `coupon_detail_id` BIGINT AUTO_INCREMENT COMMENT 'key',
-  `coupon_id` BIGINT COMMENT '优惠券ID',
-  `coupon_code` varchar(20) COMMENT '优惠券码，唯一',
-  `user_id` BIGINT COMMENT '用户ID',
-  `status` tinyint default 0 COMMENT '支付状态，0未使用，1已使用',
-  `send_time` timestamp default now() COMMENT '发券时间',
-  `used_time` timestamp COMMENT '发券时间',
-  PRIMARY KEY (`coupon_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-create unique index `a_coupon_detail_coupon_code` on `a_coupon_detail`(`coupon_code`);
-create index `a_coupon_detail_user_id` on `a_coupon_detail`(`user_id`);
-create index `a_coupon_detail_send_time` on `a_coupon_detail`(`send_time`);
-
---优惠券使用明细
-DROP TABLE IF EXISTS `a_coupon_usage`;
-CREATE TABLE `a_coupon_usage` (
-  `coupon_usage_id` BIGINT AUTO_INCREMENT COMMENT 'key',
-  `coupon_code` varchar(20) COMMENT '优惠券码，唯一',
-  `user_id` BIGINT COMMENT '用户ID',
-  `order_id` BIGINT COMMENT '订单ID',
-  `discount_amount` decimal(8, 2) COMMENT '抵扣金额',
-  `use_time` timestamp default now() COMMENT '用券时间',
-  PRIMARY KEY (`coupon_usage_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
-create index `a_coupon_usage_coupon_code` on `a_coupon_usage`(`coupon_code`);
-create index `a_coupon_usage_user_id` on `a_coupon_usage`(`user_id`);
-create index `a_coupon_usage_order_id` on `a_coupon_usage`(`order_id`);
-
 --收藏
 DROP TABLE IF EXISTS `a_product_user_favorite`;
 CREATE TABLE `a_product_user_favorite` (
