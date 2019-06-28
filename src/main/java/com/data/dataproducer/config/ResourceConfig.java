@@ -2,6 +2,7 @@ package com.data.dataproducer.config;
 
 import com.data.dataproducer.entity.AArea;
 import com.data.dataproducer.entity.AProductCategory;
+import com.data.dataproducer.entity.AWebPage;
 import com.data.dataproducer.enums.CategoryLevelEnum;
 import com.data.dataproducer.service.IAAreaService;
 import com.data.dataproducer.service.IAProductCategoryService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -312,6 +314,32 @@ public class ResourceConfig {
         iaProductCategoryService.saveBatch(result);
 
         return result;
+    }
+
+
+    /**
+     * 网站页面
+     * @return
+     */
+    @Bean
+    public Map<Integer, AWebPage> webPages () {
+        //load from db
+        Map<Integer, AWebPage> map = new HashMap<>(20);
+
+        //not exists in db, read from file
+        ReadUtil.read( getResourceAsStream("/static/web-page.csv"), line -> {
+            if (!StringUtils.isEmpty(line)) {
+                String[] arr = line.split(",");
+                AWebPage.AWebPageBuilder builder = AWebPage.builder();
+                Integer pageId = Integer.parseInt(arr[0]);
+                builder.pageType(pageId);
+                builder.pageUrl(arr[1]);
+                builder.pageName(arr[2]);
+                map.put(pageId, builder.build());
+            }
+        });
+
+        return map;
     }
 
 }
