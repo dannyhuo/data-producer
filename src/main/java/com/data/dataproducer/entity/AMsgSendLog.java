@@ -69,5 +69,10 @@ package com.data.dataproducer.entity;
             */
     private LocalDateTime sendTime;
 
+    /**
+     *  发送状态 0 失败， 1、成功
+     */
+    private Integer sendStatus;
+
 
 }

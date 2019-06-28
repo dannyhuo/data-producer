@@ -72,6 +72,7 @@ CREATE TABLE `a_msg_send_log` (
   `content` varchar(300) COMMENT '发送内容',
   `msg_type` tinyint COMMENT '消息类型 0 短信， 1、微信， 2 app push, 3、邮件',
   `send_time` timestamp default now() COMMENT '用券时间',
+  `send_status` tinyint COMMENT '发送状态 0 失败， 1、成功',
   PRIMARY KEY (`send_log_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create index `idx_a_msg_send_log_send_user_id` on `a_msg_send_log`(`send_user_id`);

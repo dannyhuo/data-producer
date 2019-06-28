@@ -9,4 +9,5 @@ package com.data.dataproducer.service.proxy;
  *
  */
 public class CouponSendServiceProxy {
+
 }
