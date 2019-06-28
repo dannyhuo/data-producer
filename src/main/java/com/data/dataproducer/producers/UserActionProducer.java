@@ -1,4 +1,4 @@
-package com.data.dataproducer.schedule;
+package com.data.dataproducer.producers;
 
 /**
  * @author danny

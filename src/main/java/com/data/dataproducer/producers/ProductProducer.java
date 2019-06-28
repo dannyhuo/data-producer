@@ -1,4 +1,4 @@
-package com.data.dataproducer.schedule;
+package com.data.dataproducer.producers;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.data.dataproducer.config.DataCacheConfig;
@@ -13,7 +13,6 @@ import com.data.dataproducer.factory.AProductFactory;
 import com.data.dataproducer.factory.RandomFactory;
 import com.data.dataproducer.service.IAProductAuditService;
 import com.data.dataproducer.service.IAProductService;
-import com.data.dataproducer.service.IAProductSoldoutService;
 import com.data.dataproducer.service.IAStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

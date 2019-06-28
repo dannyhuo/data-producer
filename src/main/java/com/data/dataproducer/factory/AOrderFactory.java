@@ -1,6 +1,7 @@
 package com.data.dataproducer.factory;
 
 import com.data.dataproducer.entity.*;
+import com.data.dataproducer.entity.bo.OrderBO;
 import com.data.dataproducer.enums.BooleanEnum;
 import com.data.dataproducer.enums.StoreAuditEnum;
 import com.data.dataproducer.enums.RefundStatusEnum;
@@ -57,7 +58,7 @@ public class AOrderFactory {
      * @param products
      * @return
      */
-    public AutoOrder produceOrder (AUser user, List<AProduct> products, AStore store) {
+    public OrderBO produceOrder (AUser user, List<AProduct> products, AStore store) {
         //生成主订单
         AOrder.AOrderBuilder builder = AOrder.builder();
         builder.userId(user.getUserId());
@@ -94,7 +95,7 @@ public class AOrderFactory {
         }
         builder.totalAmount(totalAmount);
 
-        AutoOrder order = new AutoOrder();
+        OrderBO order = new OrderBO();
         order.setOrder(builder.build());
         order.setOrderDetails(details);
 

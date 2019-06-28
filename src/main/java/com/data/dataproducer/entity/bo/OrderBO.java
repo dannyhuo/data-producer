@@ -1,6 +1,7 @@
-package com.data.dataproducer.entity;
+package com.data.dataproducer.entity.bo;
 
-import jdk.internal.dynalink.linker.LinkerServices;
+import com.data.dataproducer.entity.AOrder;
+import com.data.dataproducer.entity.AOrderDetail;
 import lombok.Data;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @date 2019/5/31 10:59 PM
  */
 @Data
-public class AutoOrder {
+public class OrderBO {
 
     private AOrder order;
 

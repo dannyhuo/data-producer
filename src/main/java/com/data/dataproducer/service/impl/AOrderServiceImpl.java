@@ -1,8 +1,11 @@
 package com.data.dataproducer.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.data.dataproducer.jms.CouponUseMessage;
+import com.data.dataproducer.jms.UserOrderMessage;
 import com.data.dataproducer.config.DataCacheConfig;
 import com.data.dataproducer.entity.*;
+import com.data.dataproducer.entity.bo.OrderBO;
 import com.data.dataproducer.enums.*;
 import com.data.dataproducer.factory.ACouponFactory;
 import com.data.dataproducer.mapper.AOrderMapper;
@@ -46,9 +49,15 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
     @Autowired
     private IAOrderRefundService iaOrderRefundService;
 
+    @Autowired
+    private UserOrderMessage userOrderMessage;
+
+    @Autowired
+    private CouponUseMessage couponUseMessage;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void order(AutoOrder order) {
+    public void order(OrderBO order) {
         //保存订单
         this.matchAndUseCoupon(order.getOrder());
         iaOrderService.save(order.getOrder());
@@ -64,6 +73,9 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
 
         //保存订单明细
         iaOrderDetailService.saveBatch(order.getOrderDetails());
+
+        //通知
+        userOrderMessage.orderAdvice(order);
     }
 
     @Override
@@ -77,11 +89,15 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
                     iaOrderPaymentService.save(payment)) {
                 //支付状态改为true
                 order.setIsPayed(BooleanEnum.TRUE.value());
+
                 //订单状态改为已支付
                 order.setStatus(OrderStatusEnum.PAYED.value());
                 order.setUpdateTime(LocalDateTime.now());
                 order.setActualPayAmount(payment.getPayAmount());
                 payOkay = iaOrderService.updateById(order);
+
+                //通知
+                userOrderMessage.payAdvice(order, payment);
             }
         }
 
@@ -101,6 +117,9 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
             //变更退款状态
             order.setStatus(OrderStatusEnum.REFUNDED.value());
             iaOrderService.updateById(order);
+
+            //通知
+            userOrderMessage.refundAdvice(order, payment, refund);
         }
         return false;
     }
@@ -117,6 +136,7 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
         LocalDateTime now = LocalDateTime.now();
         for (ACouponDetail couponDetail : couponDetails) {
             ACoupon coupon = iaCouponService.getById(couponDetail.getCouponId());
+            //优惠券在有效期内
             if (coupon.getStartTime().isBefore(now) && coupon.getEndTime().isAfter(now)) {
                 //计算折扣和满减
                 //折扣券
@@ -132,6 +152,9 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
 
                     //修改优惠券使用状态
                     this.updateCouponUsed(couponDetail, now);
+
+                    //通知
+                    couponUseMessage.useCouponAdvice(order, couponDetail, usedCoupon);
                     break;
                 }
                 //满减券
@@ -147,6 +170,9 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
                         iaCouponUsageService.save(usedCoupon);
                         //修改优惠券使用状态
                         this.updateCouponUsed(couponDetail, now);
+
+                        //通知
+                        couponUseMessage.useCouponAdvice(order, couponDetail, usedCoupon);
                         break;
                     }
                 }

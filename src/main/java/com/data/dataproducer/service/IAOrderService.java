@@ -2,8 +2,7 @@ package com.data.dataproducer.service;
 
 import com.data.dataproducer.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
+import com.data.dataproducer.entity.bo.OrderBO;
 
 /**
  * <p>
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public interface IAOrderService extends IService<AOrder> {
 
-    void order (AutoOrder order);
+    void order (OrderBO order);
 
     boolean pay (AOrder order, AOrderPayment payment);
 

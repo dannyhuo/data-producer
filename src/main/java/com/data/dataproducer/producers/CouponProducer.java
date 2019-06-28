@@ -1,4 +1,4 @@
-package com.data.dataproducer.schedule;
+package com.data.dataproducer.producers;
 
 import com.data.dataproducer.config.DataCacheConfig;
 import com.data.dataproducer.entity.ACoupon;

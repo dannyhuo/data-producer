@@ -1,12 +1,10 @@
-package com.data.dataproducer.schedule;
+package com.data.dataproducer.producers;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.data.dataproducer.config.DataCacheConfig;
 import com.data.dataproducer.entity.*;
-import com.data.dataproducer.enums.BooleanEnum;
-import com.data.dataproducer.enums.OrderStatusEnum;
+import com.data.dataproducer.entity.bo.OrderBO;
 import com.data.dataproducer.enums.ProductStatusEnum;
-import com.data.dataproducer.enums.StoreTypeEnum;
 import com.data.dataproducer.factory.AOrderFactory;
 import com.data.dataproducer.factory.RandomFactory;
 import com.data.dataproducer.service.*;
@@ -60,7 +58,6 @@ public class OrderProducer {
      */
     @Value("${data.producer.order.product.count.max}")
     private int maxProdCountPerOrder;
-
 
 
     /**
@@ -167,7 +164,7 @@ public class OrderProducer {
             AStore store = iaStoreService.getById(storeId);
 
             //生成订单和订单明细
-            AutoOrder order = aOrderFactory.produceOrder(user, entity.getValue(), store);
+            OrderBO order = aOrderFactory.produceOrder(user, entity.getValue(), store);
             iaOrderService.order(order);
 
             //根据配置，下单立即支付概率，下单后立即支付订单

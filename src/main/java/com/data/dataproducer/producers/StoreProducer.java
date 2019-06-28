@@ -1,23 +1,17 @@
-package com.data.dataproducer.schedule;
+package com.data.dataproducer.producers;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.data.dataproducer.config.DataCacheConfig;
-import com.data.dataproducer.entity.ACoupon;
-import com.data.dataproducer.entity.ACouponDetail;
 import com.data.dataproducer.entity.AStore;
 import com.data.dataproducer.entity.AStoreAudit;
 import com.data.dataproducer.enums.StoreStatusEnum;
 import com.data.dataproducer.enums.StoreTypeEnum;
-import com.data.dataproducer.factory.ACouponFactory;
 import com.data.dataproducer.factory.AStoreFactory;
 import com.data.dataproducer.factory.RandomFactory;
-import com.data.dataproducer.service.IACouponDetailService;
-import com.data.dataproducer.service.IACouponService;
 import com.data.dataproducer.service.IAStoreAuditService;
 import com.data.dataproducer.service.IAStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

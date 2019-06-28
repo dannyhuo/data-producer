@@ -1,10 +1,11 @@
-package com.data.dataproducer.schedule;
+package com.data.dataproducer.producers;
 
 import com.data.dataproducer.config.DataCacheConfig;
 import com.data.dataproducer.entity.AUser;
 import com.data.dataproducer.entity.AUserLoginDetail;
 import com.data.dataproducer.factory.AUserFactory;
 import com.data.dataproducer.factory.RandomFactory;
+import com.data.dataproducer.jms.UserRegisterMessage;
 import com.data.dataproducer.service.IAUserLoginDetailService;
 import com.data.dataproducer.service.IAUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class UserProducer {
     @Autowired
     private Map<Integer, Integer> hour24Max;
 
+    @Autowired
+    private UserRegisterMessage userRegisterMessage;
+
     /**
      * 用户注册
      */
@@ -62,6 +66,10 @@ public class UserProducer {
             List<AUserLoginDetail> loginDetails = new ArrayList<>();
             for (int i = 0; i < uc; i++) {
                 AUser user = users.get(i);
+
+                //通知
+                userRegisterMessage.registerAdvice(user);
+
                 if (null != user && null != user.getUserId()) {
                     if (user.getUserId() > maxUserId) {
                         maxUserId = user.getUserId();
