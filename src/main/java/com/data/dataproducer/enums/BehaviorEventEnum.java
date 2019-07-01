@@ -76,7 +76,7 @@ public enum BehaviorEventEnum {
                 return c;
             }
         }
-        return null;
+        return VIEW;
     }
 
     public int value() {
