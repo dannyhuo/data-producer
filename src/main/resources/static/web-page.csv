@@ -8,11 +8,25 @@
 22,https://item.a-ecommerce.com/22/c_${channel}/${productId}.html,${productName}
 23,https://search.a-ecommerce.com/23/search?keyword=${keyword},搜索
 
-31,https://home.a-ecommerce.com/31/home.do,会员中心首页
-32,https://home.a-ecommerce.com/32/info.do,我的个人信息
-33,https://cart.a-ecommerce.com/33/cart.action,购物车
-34,https://favr.a-ecommerce.com/34/favorite.do,我的收藏
-35,https://favr.a-ecommerce.com/35/store-fav.do,我的关注-店铺
-36,https://coupon.a-ecommerce.com/36/coupon.do,我的优惠券
-37,https://eval.a-ecommerce.com/37/evaluate.do,我的点评
-38,https://points.a-ecommerce.com/38/points.do,我的积分
+# 会员中心
+30,https://login.a-ecommerce.com/30/login.html,登录页
+31,https://home.a-ecommerce.com/31/home.html,会员中心首页
+32,https://home.a-ecommerce.com/32/info.html,我的个人信息
+33,https://cart.a-ecommerce.com/33/cart.html,购物车
+34,https://favr.a-ecommerce.com/34/favorite.html,我的收藏
+35,https://favr.a-ecommerce.com/35/store-fav.html,我的关注-店铺
+36,https://coupon.a-ecommerce.com/36/coupon.html,我的优惠券
+37,https://eval.a-ecommerce.com/37/evaluate.html,我的点评
+38,https://points.a-ecommerce.com/38/points.html,我的积分
+39,https://order.a-ecommerce.com/38/order-list.html,我的订单
+
+# 行为
+41,https://cart.a-ecommerce.com/41/add-cart.do?productId=${productId},加购物车
+42,https://favr.a-ecommerce.com/42/add-favorite.do?productId=${productId},收藏
+43,https://favr.a-ecommerce.com/43/add-store-fav.do?storeId=${storeId},我的关注-店铺
+44,https://eval.a-ecommerce.com/44/add-evaluate.do?orderId=${orderId},点评
+45,https://order.a-ecommerce.com/45/order.do?productId=${productId},提交订单
+
+# 结果
+54,https://eval.a-ecommerce.com/54/add-evaluate-result.html?evaluateId=${evaluateId},点评结果
+55,https://order.a-ecommerce.com/55/order-result.html?orderId=${orderId},订单结果

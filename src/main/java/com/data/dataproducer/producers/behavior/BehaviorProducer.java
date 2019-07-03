@@ -1,6 +1,7 @@
 package com.data.dataproducer.producers.behavior;
 
 import com.data.dataproducer.entity.AWebPage;
+import com.data.dataproducer.factory.RandomFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,11 +21,18 @@ public class BehaviorProducer {
     @Autowired
     private Map<Integer, AWebPage> webPages;
 
+    @Autowired
+    private RandomFactory randomFactory;
+
+
+
     /**
      * 模拟PC端埋点采集行为数据
      */
     @Scheduled(fixedRate = 10)
     public void pcBehavior () {
+
+
 
     }
 

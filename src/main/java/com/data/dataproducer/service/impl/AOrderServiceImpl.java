@@ -12,6 +12,7 @@ import com.data.dataproducer.mapper.AOrderMapper;
 import com.data.dataproducer.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,9 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
 
     @Autowired
     private CouponUseMessageProxy couponUseMessage;
+
+    @Value("${data.producer.order.refund.days.max}")
+    private int refundMaxDays;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -108,8 +112,14 @@ public class AOrderServiceImpl extends ServiceImpl<AOrderMapper, AOrder> impleme
     @Transactional(rollbackFor = Exception.class)
     public boolean refund(AOrderPayment payment, AOrderRefund refund) {
         AOrder order = iaOrderService.getById(payment.getOrderId());
+
+        //检查是否在可退款时间范围内
+        LocalDateTime tmpDate = LocalDateTime.now().plusDays(0 - refundMaxDays);
+        boolean inRefundTime = tmpDate.isBefore(payment.getPaymentTime());
+
         //订单存在，且已支付，未退款
-        if (null != order && order.getIsPayed().equals(BooleanEnum.TRUE)
+        if (inRefundTime && null != order
+                && order.getIsPayed().equals(BooleanEnum.TRUE.value())
                 && order.getStatus().equals(OrderStatusEnum.PAYED.value())) {
             //保存退款单
             iaOrderRefundService.save(refund);
