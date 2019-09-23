@@ -5,20 +5,23 @@ package com.data.dataproducer.entity;
     import com.baomidou.mybatisplus.annotation.TableId;
     import java.time.LocalDateTime;
     import java.io.Serializable;
+
+    import lombok.Builder;
     import lombok.Data;
     import lombok.EqualsAndHashCode;
     import lombok.experimental.Accessors;
 
-/**
-* <p>
+    /**
+    * <p>
     * 
     * </p>
-*
-* @author danny
-* @since 2019-06-28
-*/
+    *
+    * @author danny
+    * @since 2019-06-28
+    */
     @Data
-        @EqualsAndHashCode(callSuper = false)
+    @Builder
+    @EqualsAndHashCode(callSuper = false)
     @Accessors(chain = true)
     public class AEcart implements Serializable {
 

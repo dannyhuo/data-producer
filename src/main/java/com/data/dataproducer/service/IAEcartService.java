@@ -13,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IAEcartService extends IService<AEcart> {
 
+    /**
+     * 加入购物车
+     * @param productId
+     * @param userId
+     * @param quantity
+     * @return
+     */
+    AEcart addEcart (Integer productId, Long userId, int quantity);
+
 }
