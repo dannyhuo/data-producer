@@ -1,4 +1,4 @@
---用户表
+-- 用户表
 DROP TABLE IF EXISTS `a_user`;
 CREATE TABLE `a_user` (
   `user_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -31,7 +31,7 @@ create unique index `idx_a_user_open_id` on `a_user`(`open_id`);
 create unique index `idx_a_user_union_id` on `a_user`(`union_id`);
 
 
---登录明细
+-- 登录明细
 DROP TABLE IF EXISTS `a_user_login_detail`;
 CREATE TABLE `a_user_login_detail` (
   `user_login_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -46,7 +46,7 @@ CREATE TABLE `a_user_login_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create index `a_user_login_detail_user_id` on `a_user_login_detail`(`user_id`);
 
---产品
+-- 产品
 DROP TABLE IF EXISTS `a_product`;
 CREATE TABLE `a_product` (
   `product_id` int AUTO_INCREMENT COMMENT 'key',
@@ -64,7 +64,7 @@ CREATE TABLE `a_product` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
 
---产品审核
+-- 产品审核
 DROP TABLE IF EXISTS `a_product_audit`;
 CREATE TABLE `a_product_audit` (
   `product_audit_id` int AUTO_INCREMENT COMMENT 'key',
@@ -79,7 +79,7 @@ CREATE TABLE `a_product_audit` (
 create index `idx_product_audit_product_id` on `a_product_audit`(`product_id`);
 
 
---产品下架记录
+-- 产品下架记录
 DROP TABLE IF EXISTS `a_product_soldout`;
 CREATE TABLE `a_product_soldout` (
   `product_soldout_id` int AUTO_INCREMENT COMMENT 'key',
@@ -94,19 +94,32 @@ create index `idx_product_soldout_id_product_id` on `a_product_soldout`(`product
 
 
 
---产品品类表
+-- 产品品类表
+-- DROP TABLE IF EXISTS `a_product_category`;
+-- CREATE TABLE `a_product_category` (
+--   `category_id` int AUTO_INCREMENT COMMENT 'key',
+--   `category_name` VARCHAR(100) NOT NULL  COMMENT '产品品类名称',
+--   `category_code` varchar(10) COMMENT '产品品类编码',
+--   `parent_category_code` varchar(10) COMMENT '产品品类父编码',
+--   `category_level` tinyint COMMENT '产品品类级别，1级，2级，3级',
+--   `create_time` timestamp default now() COMMENT '创建时间',
+--   PRIMARY KEY (`category_id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+-- 商品品类
 DROP TABLE IF EXISTS `a_product_category`;
 CREATE TABLE `a_product_category` (
-  `category_id` int AUTO_INCREMENT COMMENT 'key',
-  `category_name` VARCHAR(100) NOT NULL  COMMENT '产品品类名称',
-  `category_code` varchar(10) COMMENT '产品品类编码',
-  `parent_category_code` varchar(10) COMMENT '产品品类父编码',
-  `category_level` tinyint COMMENT '产品品类级别，1级，2级，3级',
-  `create_time` timestamp default now() COMMENT '创建时间',
+  `category_id` BIGINT AUTO_INCREMENT COMMENT 'key',
+  `category_code` varchar(50) COMMENT '品类编码',
+  `parent_category_code` varchar(50) COMMENT '父品类编码',
+  `category_name` varchar(50) COMMENT '品类名称',
+  `category_level` varchar(50) COMMENT '品类级别',
+  `comment` varchar(50) COMMENT '备注',
+  `create_time` timestamp COMMENT '创建时间',
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
---购物车
+-- 购物车
 DROP TABLE IF EXISTS `a_ecart`;
 CREATE TABLE `a_ecart` (
   `cart_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -129,7 +142,7 @@ create index `idx_a_ecart_update_time` on `a_ecart`(`update_time`);
 create index `idx_a_ecart_user_id` on `a_ecart`(`user_id`);
 
 
---订单表
+-- 订单表
 DROP TABLE IF EXISTS `a_order`;
 CREATE TABLE `a_order` (
   `order_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -153,7 +166,7 @@ CREATE TABLE `a_order` (
 create index `a_order_create_time` on `a_order`(`create_time`);
 create index `a_order_update_time` on `a_order`(`update_time`);
 
---订单明细表
+-- 订单明细表
 DROP TABLE IF EXISTS `a_order_detail`;
 CREATE TABLE `a_order_detail` (
   `order_detail_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -174,7 +187,7 @@ create index `a_order_detail_product_id` on `a_order_detail`(`product_id`);
 create index `a_order_detail_create_time` on `a_order_detail`(`create_time`);
 create index `a_order_detail_update_time` on `a_order_detail`(`update_time`);
 
---支付流水
+-- 支付流水
 DROP TABLE IF EXISTS `a_order_payment`;
 CREATE TABLE `a_order_payment` (
   `order_payment_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -189,7 +202,7 @@ CREATE TABLE `a_order_payment` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create index `a_order_payment_order_id` on `a_order_payment`(`order_id`);
 
---退款单
+-- 退款单
 DROP TABLE IF EXISTS `a_order_refund`;
 CREATE TABLE `a_order_refund` (
   `order_refund_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -203,7 +216,7 @@ CREATE TABLE `a_order_refund` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create index `a_order_refund_order_payment_id` on `a_order_refund`(`order_payment_id`);
 
---收藏
+-- 收藏
 DROP TABLE IF EXISTS `a_product_user_favorite`;
 CREATE TABLE `a_product_user_favorite` (
   `product_user_favorite_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -220,7 +233,7 @@ create index `a_product_user_favorite_product_id` on `a_product_user_favorite`(`
 create index `a_product_user_favorite_favorite_time` on `a_product_user_favorite`(`favorite_time`);
 
 
---行政区
+-- 行政区
 DROP TABLE IF EXISTS `a_area`;
 CREATE TABLE `a_area` (
   `area_id` BIGINT AUTO_INCREMENT COMMENT 'key',
@@ -234,7 +247,7 @@ CREATE TABLE `a_area` (
 create index `a_area_bm` on `a_area`(`bm`);
 
 
---门店
+-- 门店
 DROP TABLE IF EXISTS `a_store`;
 CREATE TABLE `a_store` (
   `store_id` int AUTO_INCREMENT COMMENT 'key',
@@ -253,7 +266,7 @@ CREATE TABLE `a_store` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create unique index `idx_a_store_store_name` on `a_store`(`store_name`);
 
---店铺审核
+-- 店铺审核
 DROP TABLE IF EXISTS `a_store_audit`;
 CREATE TABLE `a_store_audit` (
   `store_audit_id` int AUTO_INCREMENT COMMENT 'key',
@@ -267,15 +280,3 @@ CREATE TABLE `a_store_audit` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create unique index `idx_a_store_audit_store_id` on `a_store_audit`(`store_id`);
 
---商品品类
-DROP TABLE IF EXISTS `a_product_category`;
-CREATE TABLE `a_product_category` (
-  `category_id` BIGINT AUTO_INCREMENT COMMENT 'key',
-  `category_code` varchar(50) COMMENT '品类编码',
-  `parent_category_code` varchar(50) COMMENT '父品类编码',
-  `category_name` varchar(50) COMMENT '品类名称',
-  `category_level` varchar(50) COMMENT '品类级别',
-  `comment` varchar(50) COMMENT '备注',
-  `create_time` timestamp COMMENT '创建时间',
-  PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
