@@ -81,9 +81,7 @@ public class RdbmsImporterUtil {
                 }
             });
 
-            prepareStatment.executeBatch();
-            conn.commit();
-            totalCount += count;
+            batchCommit(data, conn, ps);
         } finally {
             JdbcConnector.close(prepareStatment, conn);
         }
