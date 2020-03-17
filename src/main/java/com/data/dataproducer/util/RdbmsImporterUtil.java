@@ -35,7 +35,7 @@ public class RdbmsImporterUtil {
      * @param param
      * @return
      */
-    public static int import2rdbms(ImportInfo param) {
+    public static int import2rdbms(ImportInfo param) throws SQLException {
         jdbcUrl = param.getJdbcUrl();
         userName = param.getUserName();
         password = param.getPassword();
@@ -56,7 +56,7 @@ public class RdbmsImporterUtil {
     /**
      * 上传到关系型数据库
      */
-    private static void import2rdbms() {
+    private static void import2rdbms() throws SQLException {
         String sql = buildPreparedSql(dataPath, tableName);
         final Connection conn = JdbcConnector.getConn(jdbcUrl, userName, password);
         PreparedStatement prepareStatment = null;
@@ -84,8 +84,6 @@ public class RdbmsImporterUtil {
             prepareStatment.executeBatch();
             conn.commit();
             totalCount += count;
-        } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             JdbcConnector.close(prepareStatment, conn);
         }
@@ -169,6 +167,10 @@ public class RdbmsImporterUtil {
             System.out.println("The param not enough!");
         }
 
-        import2rdbms();
+        try {
+            import2rdbms();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
