@@ -35,7 +35,7 @@ public class RdbmsImporterUtil {
      * @param param
      * @return
      */
-    public static int import2rdbms(ImportInfo param) throws SQLException {
+    public static int import2rdbms(ImportInfo param) throws SQLException, ClassNotFoundException {
         jdbcUrl = param.getJdbcUrl();
         userName = param.getUserName();
         password = param.getPassword();
@@ -56,7 +56,7 @@ public class RdbmsImporterUtil {
     /**
      * 上传到关系型数据库
      */
-    private static void import2rdbms() throws SQLException {
+    private static void import2rdbms() throws SQLException, ClassNotFoundException {
         String sql = buildPreparedSql(dataPath, tableName);
         final Connection conn = JdbcConnector.getConn(jdbcUrl, userName, password);
         PreparedStatement prepareStatment = null;
@@ -170,6 +170,8 @@ public class RdbmsImporterUtil {
         try {
             import2rdbms();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

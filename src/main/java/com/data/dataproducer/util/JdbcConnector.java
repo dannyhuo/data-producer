@@ -18,16 +18,10 @@ public class JdbcConnector {
      * @param password
      * @return
      */
-    public static Connection getConn (String jdbcUrl, String userName, String password) {
+    public static Connection getConn (String jdbcUrl, String userName, String password) throws ClassNotFoundException, SQLException {
         Connection conn = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(jdbcUrl, userName, password);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Class.forName("com.mysql.jdbc.Driver");
+        conn = DriverManager.getConnection(jdbcUrl, userName, password);
         return conn;
     }
 

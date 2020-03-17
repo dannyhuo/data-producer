@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class RdbmsImporterController {
 
     @PostMapping("/import")
-    public int improt (@RequestBody ImportInfo importInfo) throws SQLException {
+    public int improt (@RequestBody ImportInfo importInfo) throws SQLException, ClassNotFoundException {
         return RdbmsImporterUtil.import2rdbms(importInfo);
     }
 }
