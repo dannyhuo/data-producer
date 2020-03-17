@@ -33,6 +33,8 @@ public class ResourceConfig {
     @Autowired
     private IAProductCategoryService iaProductCategoryService;
 
+    private static String poundSign = "#";
+
     private InputStream getResourceAsStream (String name) {
         return this.getClass().getClassLoader().getResourceAsStream(name);
     }
@@ -328,7 +330,7 @@ public class ResourceConfig {
 
         //not exists in db, read from file
         ReadUtil.read( getResourceAsStream("/static/web-page.csv"), line -> {
-            if (!StringUtils.isEmpty(line)) {
+            if (!StringUtils.isEmpty(line) && !line.startsWith(poundSign)) {
                 String[] arr = line.split(",");
                 AWebPage.AWebPageBuilder builder = AWebPage.builder();
                 Integer pageId = Integer.parseInt(arr[0]);

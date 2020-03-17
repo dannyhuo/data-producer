@@ -208,7 +208,7 @@ CREATE TABLE `a_order_refund` (
   `order_refund_id` BIGINT AUTO_INCREMENT COMMENT 'key',
   `order_payment_id` BIGINT COMMENT '支付单号',
   `refund_amount` int COMMENT '退款金额',
-  `refund_card_no` varchar(20) COMMENT '退款卡号',
+  `refund_card_no` varchar(50) COMMENT '退款卡号',
   `pay_no` varchar(20) COMMENT '退款回执单号编号',
   `status` tinyint COMMENT '退款状态，0成功，1失败',
   `refund_time` timestamp default now() COMMENT '退款时间',
