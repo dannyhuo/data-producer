@@ -1,0 +1,21 @@
+package com.data.dataproducer.controller;
+
+import com.data.dataproducer.entity.ImportInfo;
+import com.data.dataproducer.util.RdbmsImporterUtil;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author danny
+ * @date 2020/3/17 10:32 AM
+ */
+@RestController
+@RequestMapping("/importer/rdbms")
+public class RdbmsImporterController {
+
+    @RequestMapping("/import")
+    public int improt (@RequestBody ImportInfo importInfo) {
+        return RdbmsImporterUtil.import2rdbms(importInfo);
+    }
+}

@@ -56,6 +56,46 @@ public class ReadUtil {
         }
     }
 
+    /**
+     * read first line
+     * @param path
+     * @param charset
+     * @return
+     */
+    public static String readLine (String path, String charset) {
+        String line = null;
+        File file = new File(path);
+        if (file.exists()) {
+            InputStreamReader in = null;
+            BufferedReader reader = null;
+            try {
+                in = new InputStreamReader(new FileInputStream(file), charset);
+                reader = new BufferedReader(in);
+                line = reader.readLine();
+            }catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                try {
+                    reader.close();
+                    in.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return line;
+    }
+
+    /**
+     * read first line
+     * @param path
+     * @return
+     */
+    public static String readLine (String path) {
+        return readLine(path, "utf-8");
+    }
 
     /**
      * Read a file if file is exists.
