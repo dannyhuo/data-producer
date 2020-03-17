@@ -1,6 +1,7 @@
 package com.data.dataproducer.util;
 
 import com.data.dataproducer.entity.ImportInfo;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author danny
  * @date 2020/3/16 6:56 PM
  */
+@Slf4j
 public class RdbmsImporterUtil {
 
     private static String jdbcUrl = "jdbc:mysql://nexus1:3306/wei_data";
@@ -58,6 +60,7 @@ public class RdbmsImporterUtil {
      */
     private static void import2rdbms() throws SQLException, ClassNotFoundException {
         String sql = buildPreparedSql(dataPath, tableName);
+        log.info("Prepared sql is : {}", sql);
         final Connection conn = JdbcConnector.getConn(jdbcUrl, userName, password);
         PreparedStatement prepareStatment = null;
         try {
@@ -65,6 +68,8 @@ public class RdbmsImporterUtil {
             final PreparedStatement ps =  conn.prepareStatement(sql);
             prepareStatment = ps;
             List<String[]> data = new ArrayList<>();
+            rowNum = 0;
+            totalCount = 0;
             ReadUtil.read(dataPath, line -> {
                 rowNum++;
                 if (line != null && rowNum > 1) {
@@ -137,9 +142,7 @@ public class RdbmsImporterUtil {
                 for (int i = 0; i < cols.length; i++) {
                     preparedStatement.setString(i + 1, cols[i]);
                 }
-
                 preparedStatement.addBatch();
-                preparedStatement.executeUpdate();
             }
 
             preparedStatement.executeBatch();
