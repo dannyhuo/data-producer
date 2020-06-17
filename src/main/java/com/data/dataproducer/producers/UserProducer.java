@@ -51,12 +51,28 @@ public class UserProducer {
     /**
      * 用户注册
      */
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 200)
     public void produceUsers () {
         try {
+            // 随机决定是否执行创建用户
+            int rdflag = randomFactory.randomId(100);
+            if (rdflag % 3 != 0) {
+                return;
+            }
+
+            // 根据规则创建用户
             int hour = LocalDateTime.now().getHour();
-            Integer maxOrderCount = hour24Max.get(hour) * 5;
-            int userCount = randomFactory.randomId(maxOrderCount == null ? 5 : maxOrderCount) + 1;
+            Integer maxUserCount = hour24Max.get(hour);
+            maxUserCount = maxUserCount == null ? 1 : maxUserCount;
+            if (maxUserCount < 1) {
+                return;
+            }
+
+            int userCount = randomFactory.randomId(maxUserCount);
+            if (userCount < 1) {
+                return;
+            }
+
             //注册用户
             List<AUser> users = aUserFactory.randomAUsers(userCount);
             iaUserService.saveBatch(users);

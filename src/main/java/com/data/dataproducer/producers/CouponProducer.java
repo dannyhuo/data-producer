@@ -47,6 +47,12 @@ public class CouponProducer {
     @Value("${data.producer.coupon.enable.auto}")
     private boolean enableAutoSendCoupon;
 
+    @Value("${data.producer.coupon.maxNum}")
+    private int couponMaxNum;
+
+    @Value("${data.producer.coupon.minNum}")
+    private int couponMinNum;
+
 
     private int sendCouponBatchSize = 5000;
 
@@ -63,12 +69,15 @@ public class CouponProducer {
         }
         log.info("Coupon of '{}' created, will send coupon to users after 1 minutes.", coupon);
         //创建活动后，等待1分钟
-        Thread.sleep(1000 * 10);
+        Thread.sleep(1000 * 60);
 
         //发券
         long base = dataShare.getMaxUserId() / 100;
         int min = (int) (base * minCoverPercent);
+        min = min > couponMinNum ? couponMinNum : min;
         int max = (int) (base * maxCoverPercent);
+        max = max > couponMaxNum ? couponMaxNum : max;
+
         int users = randomFactory.randomId(max - min) + min;
         log.info("Will send coupon to user, Covered user's is " + users);
         int totalPage = users % sendCouponBatchSize == 0 ?

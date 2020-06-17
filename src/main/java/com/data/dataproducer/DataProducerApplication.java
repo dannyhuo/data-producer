@@ -16,7 +16,7 @@ public class DataProducerApplication {
 
 	public static void main(String[] args) {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-		
+
 		SpringApplication.run(DataProducerApplication.class, args);
 	}
 

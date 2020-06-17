@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.data.dataproducer.config.DataCacheConfig;
 import com.data.dataproducer.entity.*;
 import com.data.dataproducer.entity.bo.OrderBO;
+import com.data.dataproducer.enums.BooleanEnum;
+import com.data.dataproducer.enums.OrderStatusEnum;
 import com.data.dataproducer.enums.ProductStatusEnum;
 import com.data.dataproducer.factory.AOrderFactory;
 import com.data.dataproducer.factory.RandomFactory;
@@ -66,10 +68,12 @@ public class OrderProducer {
     @Scheduled(fixedRate = 1000 * 10)
     public void autoProduceOrder () {
         int hour = LocalDateTime.now().getHour();
-        Integer maxOrderCount = hour24Max.get(hour);
-        int orderCount = randomFactory.randomId(maxOrderCount == null ? 5 : maxOrderCount) + 1;
-        for (int i = 0; i < orderCount; i++) {
-            this.autoOrder();
+        Integer maxOrderCount = hour24Max.get(hour) == null ? 1 : hour24Max.get(hour);
+        if (maxOrderCount > 0) {
+            int orderCount = randomFactory.randomId(maxOrderCount);
+            for (int i = 0; i < orderCount; i++) {
+                this.autoOrder();
+            }
         }
     }
 
@@ -82,7 +86,11 @@ public class OrderProducer {
         int orderCount = randomFactory.randomId(123L) + 1;
         for (int i = 0; i < orderCount; i++) {
             long orderId = dataCache.getRdmOrderId();
-            this.autoPayment(iaOrderService.getById(orderId));
+            AOrder order = iaOrderService.getById(orderId);
+            // 订单存在，且未支付
+            if (null != order && BooleanEnum.FALSE.value() == order.getIsPayed()) {
+                this.autoPayment(order);
+            }
         }
     }
 

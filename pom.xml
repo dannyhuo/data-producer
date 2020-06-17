@@ -16,7 +16,21 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<sqoop.version>sqoop-1.4.7</sqoop.version>
+		<hadoop.version>2.6.0</hadoop.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -81,6 +95,51 @@
 			<artifactId>kafka-clients</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+
+		<!-- sqoop -->
+		<!-- https://mvnrepository.com/artifact/org.apache.sqoop/sqoop -->
+		<dependency>
+			<groupId>org.apache.sqoop</groupId>
+			<artifactId>sqoop</artifactId>
+			<version>${sqoop.version}</version>
+			<systemPath>${project.basedir}/lib/sqoop-1.4.7-hadoop260.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-client</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-jdbc</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 
 	</dependencies>
 
