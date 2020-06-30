@@ -111,7 +111,8 @@ public class AOrderFactory {
     public AOrderPayment producePayment (AOrder order) {
         AOrderPayment.AOrderPaymentBuilder builder = AOrderPayment.builder();
         builder.orderId(order.getOrderId());
-        builder.payAmount(order.getTotalAmount());
+        // 支付=应付
+        builder.payAmount(order.getDueAmount());
         //每用户默认有${配置}张卡，随机使用某张卡
         String cardNo = order.getUserId().toString() + randomFactory.randomId(maxPayCartCount);
         builder.payCardNo(MD5Util.md5(cardNo));

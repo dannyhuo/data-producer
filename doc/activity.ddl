@@ -8,7 +8,7 @@ CREATE TABLE `a_coupon` (
   `discount` decimal(4, 2) COMMENT '打折， 92折扣为0.92',
   `discount_amount` decimal(8, 2) COMMENT '满减或立减金额',
   `audit_status` tinyint default 0 COMMENT '审核状态，0待审核，1审核通过，2审核未通过',
-  `start_time` timestamp default now() COMMENT '有效期，起始时间',
+  `start_time` timestamp null COMMENT '有效期，起始时间',
   `end_time` timestamp default now() COMMENT '有效期，截止时间',
   `create_by` varchar(30) COMMENT '创建人',
   `create_time` timestamp default now() COMMENT '创建时间',
@@ -24,7 +24,7 @@ CREATE TABLE `a_coupon_detail` (
   `user_id` BIGINT COMMENT '用户ID',
   `status` tinyint default 0 COMMENT '支付状态，0未使用，1已使用',
   `send_time` timestamp default now() COMMENT '发券时间',
-  `used_time` timestamp COMMENT '发券时间',
+  `used_time` timestamp null COMMENT '发券时间',
   PRIMARY KEY (`coupon_detail_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 create unique index `a_coupon_detail_coupon_code` on `a_coupon_detail`(`coupon_code`);
@@ -55,7 +55,7 @@ CREATE TABLE `a_msg_template` (
   `template_type` tinyint COMMENT '模板消息类型 0 短信， 1、微信， 2 app push, 3、邮件',
   `placeholders` varchar(100) default 0 COMMENT '模板消息中占位符，占位符会在发送的时候用对应的参数替换',
   `create_time` timestamp default now() COMMENT '用券时间',
-  `update_time` timestamp default now() COMMENT '更新时间',
+  `update_time` timestamp null COMMENT '更新时间',
   PRIMARY KEY (`template_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
@@ -98,10 +98,10 @@ CREATE TABLE `a_activity` (
   `template_type` tinyint COMMENT '模板消息类型 0 短信， 1、微信， 2 app push, 3、邮件',
   `approve_status` tinyint default 0 COMMENT '审批状态 0 未审核， 1 通过， 2 不通过',
   `approve_comment` varchar(100) COMMENT '审批备注',
-  `start_time` timestamp default now() COMMENT '活动有效期，起始时间',
-  `end_time` timestamp default now() COMMENT '活动有效期，截止时间',
+  `start_time` timestamp null COMMENT '活动有效期，起始时间',
+  `end_time` timestamp null COMMENT '活动有效期，截止时间',
   `create_time` timestamp default now() COMMENT '创建时间',
-  `approve_time` timestamp default now() COMMENT '审核时间',
+  `approve_time` timestamp null COMMENT '审核时间',
   `is_deleted` tinyint default 0 COMMENT '是否删除， 0=未删除，1=已删除',
   PRIMARY KEY (`activity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;

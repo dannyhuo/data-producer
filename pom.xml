@@ -89,11 +89,11 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<!-- kafka -->
+		<!--引入kafak和spring整合的jar-->
 		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka-clients</artifactId>
-			<version>2.3.0</version>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>2.2.7.RELEASE</version>
 		</dependency>
 
 		<!-- sqoop -->

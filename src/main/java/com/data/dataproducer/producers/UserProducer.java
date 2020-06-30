@@ -9,6 +9,7 @@ import com.data.dataproducer.proxy.jms.UserRegisterMessageProxy;
 import com.data.dataproducer.service.IAUserLoginDetailService;
 import com.data.dataproducer.service.IAUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +49,7 @@ public class UserProducer {
     @Autowired
     private UserRegisterMessageProxy userRegisterMessage;
 
+
     /**
      * 用户注册
      */
@@ -56,7 +58,7 @@ public class UserProducer {
         try {
             // 随机决定是否执行创建用户
             int rdflag = randomFactory.randomId(100);
-            if (rdflag % 3 != 0) {
+            if (rdflag % 5 == 0) {
                 return;
             }
 
@@ -72,7 +74,6 @@ public class UserProducer {
             if (userCount < 1) {
                 return;
             }
-
             //注册用户
             List<AUser> users = aUserFactory.randomAUsers(userCount);
             iaUserService.saveBatch(users);

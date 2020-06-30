@@ -4,6 +4,8 @@ import com.data.dataproducer.entity.ACouponDetail;
 import com.data.dataproducer.entity.ACouponUsage;
 import com.data.dataproducer.entity.AOrder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class CouponUseMessageProxy {
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     /**
      * 用券消息通知
