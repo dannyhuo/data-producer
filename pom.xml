@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<sqoop.version>sqoop-1.4.7</sqoop.version>
-		<hadoop.version>2.6.0</hadoop.version>
+		<hadoop.version>3.2.3</hadoop.version>
 	</properties>
 
 	<repositories>
